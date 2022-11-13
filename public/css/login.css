@@ -1,0 +1,156 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  
+  }
+  body {
+      background-color: #F3DFD6;
+      background-size: cover;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      height: 95vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    /* .navbar{
+      height: 95vh;
+      width:100%;
+      
+    }
+    nav ul li{
+      list-style-type:none ;
+      display: inline-block;
+    }
+    
+    nav{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #f1cbb8;
+      padding: 40px 100% 10px 100%;  
+    } */
+    h2 {
+      position: relative;
+      left: 27px;
+      padding-top: 1.6rem;
+      color: black;
+      margin-bottom: 25px;
+      font-family: 'Cuprum', sans-serif;
+    }
+    
+    h2 span {
+      border-bottom: 3px solid #b34862;
+      border-radius: 3px;
+    }
+    
+    .loginBlock {
+      background-color: rgb(255, 255, 255);
+      border-radius: 5px;
+      width: 370px; 
+      height: auto;
+    }
+    
+   .register{
+      text-decoration: none;
+    }
+    
+    .fa, .fa-regular {
+      margin-right: 0.7rem;
+    }
+    
+    .emailDiv, .passDiv, .confirmPassDiv {
+      border-bottom: 2px solid rgb(0, 0, 0);
+      margin-top: 1.8rem;
+    }
+    
+    .error {
+      color: red;
+      font-size: 15px;
+    }
+    
+    #showPassword, #showConfirmPassword {
+      position: relative;
+      left: 25px;
+      cursor: pointer;
+      color: rgb(0, 0, 0);
+    }
+    
+    #email, #password, #confirmPassword {
+      margin-bottom: 3px;
+      width: 75%;
+    }
+    
+    input {
+      border: none;
+      background-color: rgb(255, 255, 255);
+      outline: none;
+      font-size: 18px;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+    
+    .formContent {
+      padding: 0 1rem 1.5rem 1.5rem;
+    }
+    
+    .accept {
+      margin-top: 1.9rem;
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+    }
+    
+    .checkboxError {
+      margin-bottom: 1.4rem;
+    }
+    
+    button {
+      display: block;
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 1rem;
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 16px;
+      background-color: #000000;
+      color: white;
+      border-radius: 3px;
+      border: none;
+      text-align: center;
+      cursor: pointer;
+    }
+    button:hover{
+      background-color: rgb(255, 255, 255);
+      color: rgb(0, 0, 0);
+      border: 2px solid;
+    
+    }
+    p {
+      text-align: center;
+      font-size: 15px;
+      margin-top: 1.3rem;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+    
+    .emailError, .passError, .confirmPassError {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    
+    #emailExcla, #passExcla, #confirmPassExcla, #checkboxExcla {
+      color: red;
+      margin-left: 0;
+      margin-top: 0.2rem;
+      margin-right: 0.2rem;
+      font-size: 13px;
+      visibility: hidden;
+    }  
+    /* media queries */
+    @media screen and (max-width: 390px) {
+      .loginBlock {
+          max-width: 300px;
+      }
+    
+     #email, #password, #confirmPassword {
+          width: 70%;
+      }
+    }

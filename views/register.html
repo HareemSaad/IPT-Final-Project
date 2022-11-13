@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    
+    <link rel="stylesheet" href="/css/register.css">
+    <script src="https://kit.fontawesome.com/f66de91617.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="registrationBlock">
+        <h2><span>Sig</span>n Up</h2>
+
+        <!-- Div for form -->
+        <div class="formContent">
+            <form id="form">
+                <!-- Div for email input to make a border-bottom -->
+                <div class="nameDiv">
+
+                    <i class="fa-regular fa-user"></i>
+
+                    <input type="text" id="Username" name="username" placeholder="Enter your name"><br>
+
+                </div>
+
+                <!-- error div for password -->
+                <div class="nameError">
+
+                    <i class="fa fa-circle-exclamation" id="nameExcla"></i>
+
+                    <div class="error"></div>
+
+                </div>
+
+                <!-- Div for email input to make a border-bottom -->
+                <div class="emailDiv">
+
+                    <i class="fa-regular fa-envelope"></i>
+
+                    <input type="text" id="email" name="email" placeholder="Enter your email"><br>
+
+                </div>
+
+                <!-- error div for password -->
+                <div class="emailError">
+                    <i class="fa fa-circle-exclamation" id="emailExcla"></i>
+                    <div class="error"></div>
+                </div>
+
+                <!-- Div for password input -->
+                <div class="passDiv">
+
+                    <i class="fa fa-lock"></i>
+
+                    <input type="password" id="password" name="password" placeholder="Create password">
+
+                    <i class="fa fa-eye" id="showPassword"></i><br>
+                </div>
+                <!-- error div for password -->
+                <div class="passError">
+                    <i class="fa fa-circle-exclamation" id="passExcla"></i>
+                    <div class="error"></div>
+                </div>
+
+                <!-- Div for confirm password input -->
+                <div class="confirmPassDiv">
+
+                    <i class="fa fa-lock"></i>
+
+                    <input type="password" id="confirmPassword" placeholder="Confirm password">
+
+                    <i class="fa fa-eye" id="showConfirmPassword"></i><br>
+
+                </div>
+                <!-- error div for confirm password -->
+                <div class="confirmPassError">
+                    <i class="fa fa-circle-exclamation" id="confirmPassExcla"></i>
+                    <div class="error"></div>
+                </div>
+
+                <!-- Div for remember me and forgor password -->
+                <div class="accept">
+                    <input type="checkbox" name="accept" id="checkbox" value="accepted">
+                    <label for="checkbox">I accept all terms & conditions</label>
+                </div>
+
+                <!-- error div for checkbox-->
+                <div class="checkboxError">
+                    <i class="fa fa-circle-exclamation" id="checkboxExcla"></i>
+                    <div class="error"></div>
+                </div>
+
+                <!-- Button and end text -->
+                <button id="reg" type="submit">Register now</button>
+
+                <p>Already have an account? <a href="#" class="login">Login now</a></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script src="/js/register.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <script src="https://kit.fontawesome.com/f66de91617.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- <header>
+    <div class="navbar">
+    <nav>
+        <ul class="navlinks">
+            <li><a href='#'>Home</a></li>
+            <li><a href='#'>Search</a></li>
+            <li><a href='#'>Login</a></li>
+            <li><a href='#'>Register</a></li>
+        </ul>
+    </nav>
+</div>
+</header> -->
+    <div class="loginBlock">
+        <h2><span>Log</span>In</h2>
+
+        <!-- Div for form -->
+        <div class="formContent">
+            <form id="form">
+                <!-- Div for email input to make a border-bottom -->
+                <div class="emailDiv">
+
+                    <i class="fa-regular fa-envelope"></i>
+
+                    <input type="text" id="email" placeholder="Enter your email"><br>
+
+                </div>
+
+                <!-- error div for password -->
+                <div class="emailError">
+                    <i class="fa fa-circle-exclamation" id="emailExcla"></i>
+                    <div class="error"></div>
+                </div>
+
+                <!-- Div for confirm password input -->
+                <div class="passDiv">
+
+                    <i class="fa fa-lock"></i>
+
+                    <input type="password" id="password" placeholder="Enter password">
+
+                    <i class="fa fa-eye" id="showPassword"></i><br>
+
+                </div>
+                <!-- error div for password -->
+                <div class="passError">
+                    <i class="fa fa-circle-exclamation" id="passExcla"></i>
+                    <div class="error"></div>
+                </div>
+
+                <!-- Button and end text -->
+                <button type="submit">Log In</button>
+
+                <p>Don't have an account <a href="#" class="register">Register</a></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="/js/login.js"></script>
+</body>
+
+</html>
