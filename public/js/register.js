@@ -65,7 +65,6 @@ form.addEventListener('submit', async event => {
     const result = inspectInputs();
     if (result === true) {
         
-
         const res = await fetch("http://localhost:3000/register.html", {
             method: 'POST',
             headers: {
@@ -78,6 +77,13 @@ form.addEventListener('submit', async event => {
             })
             //above variables should be same in const {Username, Password, Email} = req.body when loading this function (in express file)
         })
+        console.log(res)
+        if(res.status == 200) {
+            window.location = "/calendar.html"
+        } else {
+            window.location = "/register.html"
+        }
+        
     }
 });
 

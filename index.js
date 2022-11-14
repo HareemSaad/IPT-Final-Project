@@ -22,9 +22,19 @@ async function main() {
 }
 
 const userSchema = new mongoose.Schema({
-    Username: String, 
-    Email: String, 
-    Password: String
+    Username: {
+        type: String, 
+        required: true
+    },
+    Email: {
+        type: String, 
+        required: true, 
+        unique: true
+    },
+    Password: {
+        type: String, 
+        required: true
+    }
 });
 
 const users = mongoose.model('user', userSchema);
@@ -37,6 +47,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
  * then index files have rest of the links
  */
 app.use(express.static(path.join(__dirname, '/public')));
+// app.set('view engine', 'ejs');
 
 /**
  * install nodemon as a dependency -> npm install --save-dev nodemon
@@ -59,6 +70,12 @@ app.get("/", (req, res)=>{
 app.get("/login.html", (req, res)=>{
     res.sendFile(__dirname + "/views/login.html");
     
+    res.status(200);
+});
+
+app.get("/calendar.html", (req, res)=>{
+    console.log("object");
+    res.sendFile(__dirname + "/views/calendar.html");
     res.status(200);
 });
 
@@ -85,21 +102,31 @@ app.get('/info/:dynamic', (req, res) => {
  * if email already exists we do not add it to the database
  */
     
-app.post("/register.html", (req, res) => { 
-    console.log(1)
-    const {Username, Password, Email} = req.body 
-    console.log(Username, Password, Email)
+app.post("/register.html", async (req, res) => { 
+    
+    try { 
+        console.log("erve")
+        const {Username, Password, Email} = req.body 
+        console.log(Username, Password, Email)
 
-    console.log(ifExistsByEmail(Email))
-    if (ifExistsByEmail(Email))  {
-        return;
+        // console.log(ifExistsByEmail(Email))
+        // if (ifExistsByEmail(Email))  {
+        //     return;
+        // }
+        const result = await users.insertMany({
+            "Username": Username,
+            "Email": Email,
+            "Password": Password
+        })
+    
+        console.log("happy");
+
+        res.status(200).send()
+
+    } catch (error) {
+        console.log("hi = ", error)
+        res.status(201).send(error) 
     }
-    users.insertMany({
-        "Username": Username,
-        "Email": Email,
-        "Password": Password
-    })
-    res.status(200).send({ status: 'recieved'}) 
     
 });
 
@@ -112,16 +139,9 @@ app.post("/login.html", async (req, res) => {
 
     if (verification) {
         console.log(verification);
-        // res.redirect('/');
-        //TODO: redirect to user page
+        res.status(200).send()
     }
 });
-
-// app.post('/', (req, res) => {
-//     console.log("first")
-//     res.redirect(307, '/');
-// })
-
 
 /**
  * if user exists this function returns true
@@ -147,15 +167,7 @@ async function verify(email, password) {
         return true;
     }
     return false
-
-    // const index = Object.values(json).indexOf(password)
-    // const key = Object.keys(json)[index];
-
-    // console.log(key); // = key2
-    // console.log(see.get("Email"))
-    // return (!(JSON.stringify(see) === JSON.stringify([])))
 }
-
 
 /**
  * make it listen to port -- IMPORTANT

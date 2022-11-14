@@ -20,6 +20,12 @@ form.addEventListener('submit', async event => {
             })
             //above variables should be same in const {Username, Password, Email} = req.body when loading this function (in express file)
         })
+        console.log(res)
+        if(res.status == 200) {
+            window.location = "/calendar.html"
+        } else {
+            window.location = "/login.html"
+        }
     }
 });
 
