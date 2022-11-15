@@ -1,4 +1,4 @@
-const currentDate = document.querySelector(".current-date")
+const currentDate = document.querySelector(".current-date"),
 days=document.querySelector(".days");
 
 twoIcons=document.querySelectorAll(".icons span");
@@ -74,8 +74,27 @@ twoIcons.forEach(icon =>{
     });
 });
 
-
 /**Hareem's area */
+//add onclick listener's on callendar tiles
+
+// Get all list items in days ul with querySelectorAll
+const elements = days.querySelectorAll('li');
+
+// Iterate over elements
+elements.forEach(element => 
+  // Add click event to every node
+  element.addEventListener('click', () => {
+    if (element.classList[0] === "inactive") {return}
+    const monthYear = currentDate.innerText.split(" ");
+    const date = element.innerText
+    const month = monthYear[0]
+    const year = monthYear[1]
+    console.log(date, month, year)
+  })
+);
+
+
+
 //Add event Modal
 const addModal = document.getElementById("add-modal");
 const showBtn = document.getElementById("new-event-submit");
@@ -84,8 +103,14 @@ const addSaveBtn = document.getElementById("add-modal-save");
 
 showBtn.addEventListener("click", (e) =>  {
     e.preventDefault()
+    
+    const addHead = document.getElementById("add-ev-heading");
+    const addDes = document.getElementById("add-ev-des");
+
+    addHead.value = ""
+    addDes.value = ""
+    
     addModal.style.display = "block";
-    console.log(1);
 })
 
 addCloseBtn.onclick = function(e) {
@@ -111,6 +136,10 @@ const editSaveBtn = document.getElementById("edit-modal-save");
 
 editCloseBtn.onclick = function(e) {
     e.preventDefault()
+    const heading = document.getElementById("edit-ev-heading");
+    const description = document.getElementById("edit-ev-des");
+
+    createEvent(heading.value, description.value)
     editModal.style.display = "none";
 }
 
@@ -189,9 +218,3 @@ function createEvent (heading, des) {
 const delEvent = document.getElementById("del-ev");
 const editEvent = document.getElementById("edit-ev");
 
-// delEvent.addEventListener("click", (e) =>  {
-//     e.preventDefault()
-
-//     createEvent(heading.value, description.value)
-//     modal.style.display = "none";
-// })
