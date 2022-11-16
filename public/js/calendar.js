@@ -1,6 +1,6 @@
-const currentDate = document.querySelector(".current-date"),
-days=document.querySelector(".days");
 
+const currentDate = document.querySelector(".current-date"),
+days=document.querySelector(".days"),
 twoIcons=document.querySelectorAll(".icons span");
 
 //Getting current date, year and month
@@ -8,6 +8,8 @@ let date = new Date(),
 currYear=date.getFullYear(),
 //getMonth() shows current month from 0-11 so Nov is the 10th month
 currMonth=date.getMonth();
+
+var _date = '', month = '', year = ''
 
 //check current date
 //console.log(date,currYear,currMonth);
@@ -51,10 +53,10 @@ const calendar = () =>{
     currentDate.innerText = `${months[currMonth]} ${currYear}`;
     days.innerHTML = li;
 }
-calendar();
-
+calendar()
+addOnClickToCalendarTiles()
 //function for icons
-twoIcons.forEach(icon =>{
+const icons = twoIcons.forEach(icon =>{
     //click event for both icons
     icon.addEventListener("click",()=>{
      // console.log(icon);
@@ -71,60 +73,94 @@ twoIcons.forEach(icon =>{
         date = new Date();
     }
      calendar();
+     addOnClickToCalendarTiles()
     });
 });
 
 /**Hareem's area */
+
 //add onclick listener's on callendar tiles
+function addOnClickToCalendarTiles() {
+    // Get all list items in days ul with querySelectorAll
+    const elements = days.querySelectorAll('li');
 
-// Get all list items in days ul with querySelectorAll
-const elements = days.querySelectorAll('li');
+    // Iterate over elements
+    elements.forEach(element => 
+        // Add click event to every node
+        element.addEventListener('click', () => {
+            if (element.classList[0] === "inactive") {
+                // if tile is inactive set global variables to null
+                _date = ''
+                month = ''
+                year = ''
+                return
+            }
+            //fi not split inner text to get global variables
+            const monthYear = currentDate.innerText.split(" ");
+            _date = element.innerText
+            month = monthYear[0]
+            year = monthYear[1]
 
-// Iterate over elements
-elements.forEach(element => 
-  // Add click event to every node
-  element.addEventListener('click', () => {
-    if (element.classList[0] === "inactive") {return}
-    const monthYear = currentDate.innerText.split(" ");
-    const date = element.innerText
-    const month = monthYear[0]
-    const year = monthYear[1]
-    console.log(date, month, year)
-  })
-);
-
-
+            //render that day's event list
+            renderEventList()
+            console.log(_date, month, year)
+        })
+    );
+}
 
 //Add event Modal
 const addModal = document.getElementById("add-modal");
-const showBtn = document.getElementById("new-event-submit");
+const showBtn = document.getElementById("new-event-submit"); //add Event
 const addCloseBtn = document.getElementById("add-modal-close");
 const addSaveBtn = document.getElementById("add-modal-save");
 
+//open modal when add event is clicked
 showBtn.addEventListener("click", (e) =>  {
-    e.preventDefault()
+    try {
+        e.preventDefault()
     
-    const addHead = document.getElementById("add-ev-heading");
-    const addDes = document.getElementById("add-ev-des");
+        const addHead = document.getElementById("add-ev-heading");
+        const addDes = document.getElementById("add-ev-des");
 
-    addHead.value = ""
-    addDes.value = ""
+        //send input values to null
+        addHead.value = ""
+        addDes.value = ""
+        
+        //reveal modal
+        addModal.style.display = "block";
+    } catch (error) {
+        console.log(error);
+    }
     
-    addModal.style.display = "block";
 })
 
+//close modal when clicked
 addCloseBtn.onclick = function(e) {
     e.preventDefault()
+
+    //hide modal
     addModal.style.display = "none";
 }
 
+//save event
 addSaveBtn.addEventListener("click", (e) =>  {
-    e.preventDefault()
-    const heading = document.getElementById("add-ev-heading");
-    const description = document.getElementById("add-ev-des");
+    try {
+        e.preventDefault()
+        const heading = document.getElementById("add-ev-heading");
+        const description = document.getElementById("add-ev-des");
 
-    createEvent(heading.value, description.value)
-    addModal.style.display = "none";
+        //log event to db
+        logEvent(heading.value, description.value, _date, month, year)
+
+        //create event div
+        createEvent(heading.value, description.value)
+
+        //hide modal
+        addModal.style.display = "none";
+    } catch (error) {
+        console.log(error);
+    }
+    
 })
 
 //edit event Modal
@@ -134,29 +170,44 @@ const editCloseBtn = document.getElementById("edit-modal-close");
 const editSaveBtn = document.getElementById("edit-modal-save");
 
 
+//TODO: closing modal saves the value changes to db and div because you have already changed the heading.value and des.val by the timw you click close
+//close modal and recreate event
 editCloseBtn.onclick = function(e) {
     e.preventDefault()
-    const heading = document.getElementById("edit-ev-heading");
-    const description = document.getElementById("edit-ev-des");
+    const heading = document.getElementById("edit-ev-heading").value;
+    const description = document.getElementById("edit-ev-des").value;
 
-    createEvent(heading.value, description.value)
+    // console.log(heading, description);
+
+    //when edit is clicked event is deleated from the db to
+    //this is to recreate it
+    logEvent(heading, description, _date, month, year)
+    createEvent(heading, description)
+
+    //hide modal
     editModal.style.display = "none";
 }
 
+//close modal and "update" event
 editSaveBtn.addEventListener("click", (e) =>  {
     e.preventDefault()
     const heading = document.getElementById("edit-ev-heading");
     const description = document.getElementById("edit-ev-des");
 
+    //when edit is clicked event is deleated from the db to
+    //this is to recreate it
+    logEvent(heading.value, description.value, _date, month, year)
     createEvent(heading.value, description.value)
+
+    //hide modal
     editModal.style.display = "none";
 })
 
-//create event
 function createEvent (heading, des) {
     // if (heading === "" || des === "") {return}
 
-    const eventList = document.getElementById("events");
+    //get parent div
+    const eventList = document.getElementById("event-List");
 
     //create heading 
     let head = document.createElement('h2')
@@ -185,7 +236,7 @@ function createEvent (heading, des) {
     btns.appendChild(del)
     btns.appendChild(edit)
 
-
+    //append everything to form event
     let event = document.createElement('div')
     event.setAttribute('id','event-box');
     event.classList.add("event")
@@ -193,28 +244,116 @@ function createEvent (heading, des) {
     event.appendChild(desc)
     event.appendChild(btns)
 
+    //append to parent div
     eventList.appendChild(event)
 
+    //when del is clicked delete event from db and screen
     del.addEventListener("click", () => {
+        delEvent(heading, des, _date, month, year)
         event.remove()
     })
 
+    //when edit is clicked "update" event from db and screen
     edit.addEventListener("click", (e) => {
         e.preventDefault()
+        
+        //delete prev version
+        delEvent(heading, des, _date, month, year)
+
+        //remove from screen
         event.remove()
         
+        //display edit modal
         editModal.style.display = "block";
         
-
         const editHead = document.getElementById("edit-ev-heading");
         const editDes = document.getElementById("edit-ev-des");
 
+        //change field values to old values
         editHead.value = heading
         editDes.value = des
     })
 
 }
 
-const delEvent = document.getElementById("del-ev");
-const editEvent = document.getElementById("edit-ev");
+async function logEvent(heading, description, day, month, year) {
+    //fetch log event request
+    try {
+        const res = await fetch("http://localhost:3000/logEvent", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                Heading: heading,
+                Description: description,
+                Day: day,
+                Month: month,
+                Year: year,
+                //req.body reads from here
+            })
+        })
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
+
+async function delEvent(heading, description, day, month, year) {
+    try {
+        const res = await fetch("http://localhost:3000/delEvent", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                Heading: heading,
+                Description: description,
+                Day: day,
+                Month: month,
+                Year: year,
+
+            })
+        })
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
+
+async function renderEventList() {
+    try {
+        //clear event list panel
+        const eventList = document.getElementById("event-List");
+    
+        while (eventList.firstChild) {
+            eventList.firstChild.remove()
+        }
+        
+        //fetch json of events on that day of this user
+        const res = await fetch("http://localhost:3000/getEvents", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                Day: _date,
+                Month: month,
+                Year: year,
+
+            })
+        })
+
+        //wait for json
+        events = await res.json()
+
+        //create event for each event
+        events.forEach(element => {
+            createEvent(element.EventHeading, element.EventDescription)
+        });
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
 

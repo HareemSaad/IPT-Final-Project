@@ -62,9 +62,13 @@ const form = document.getElementById('form');
 form.addEventListener('submit', async event => {
     event.preventDefault();
 
+    //inspect inputs
     const result = inspectInputs();
+
+    //if they pass teh test
     if (result === true) {
         
+        //fetch register.html
         const res = await fetch("http://localhost:3000/register.html", {
             method: 'POST',
             headers: {
@@ -78,8 +82,10 @@ form.addEventListener('submit', async event => {
             //above variables should be same in const {Username, Password, Email} = req.body when loading this function (in express file)
         })
         console.log(res)
+
+        //if reg succesful redirect to login other wise reg
         if(res.status == 200) {
-            window.location = "/calendar.html"
+            window.location = "/login.html"
         } else {
             window.location = "/register.html"
         }

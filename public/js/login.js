@@ -3,12 +3,15 @@ const password = document.getElementById('password');
 
 const form = document.getElementById('form');
 form.addEventListener('submit', async event => {
-    console.log(55);
     event.preventDefault();
 
+    //see if inputs match
     const result = inspectInputs();
+
+    //if they do
     if (result === true) {
         
+        //request login 
         const res = await fetch("http://localhost:3000/login.html", {
             method: 'POST',
             headers: {
@@ -20,10 +23,12 @@ form.addEventListener('submit', async event => {
             })
             //above variables should be same in const {Username, Password, Email} = req.body when loading this function (in express file)
         })
-        console.log(res)
+        
+        //if it returns status 200 i.e successful redirect to calendar
         if(res.status == 200) {
+            await res.json()
             window.location = "/calendar.html"
-        } else {
+        } else { //if it returns any other status i.e unsuccessful redirect to login
             window.location = "/login.html"
         }
     }

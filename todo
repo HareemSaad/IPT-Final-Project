@@ -1,0 +1,13 @@
+if you access calendar with empty session redirect to login
+
+in index.js
+    in app.post(/logEvent)
+        //TODO: check if id in cookie session is valid
+    app.post(/delEvent)
+        //TODO: check if id in cookie session is valid
+
+in calendar.js
+    for editCloseBtn onclick
+    //TODO: closing modal saves the value changes to db and div 
+    because you have already changed the heading.value and des.val 
+    by the timw you click close
