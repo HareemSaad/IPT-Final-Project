@@ -113,6 +113,7 @@ app.get("/login.html", (req, res)=>{
 });
 
 app.get("/calendar.html", (req, res)=>{
+    //if id not in cookies redirect to home
     if(!("id" in req.cookies)) {
         res.redirect('/')
     }
@@ -297,6 +298,7 @@ async function verify(email, password) {
     return false
 }
 
+//verify if cookie id is in db
 async function verifyId(id) {
     // console.log(id);
     const record = (await users.findOne({"_id": id})).toJSON()
