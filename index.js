@@ -90,6 +90,11 @@ const events = mongoose.model('events', eventSchema);
  * so we create what page we want to display when /login.html is called
  */
 app.get("/", (req, res)=>{
+    //if in session and cookies are verified redirect to calendar page
+    if("id" in req.cookies && verifyId(req.cookies.id)) {
+        res.redirect('/calendar.html')
+    }
+
     res.sendFile(__dirname + "/views/home.html");
     
     res.status(200);
@@ -98,20 +103,41 @@ app.get("/", (req, res)=>{
 });
 
 app.get("/login.html", (req, res)=>{
+    //if in session and cookies are verified redirect to calendar page
+    if("id" in req.cookies && verifyId(req.cookies.id)) {
+        res.redirect('/calendar.html')
+    }
     res.sendFile(__dirname + "/views/login.html");
     
     res.status(200);
 });
 
 app.get("/calendar.html", (req, res)=>{
+    if(!("id" in req.cookies)) {
+        res.redirect('/')
+    }
     res.sendFile(__dirname + "/views/calendar.html");
     res.status(200);
 });
 
 app.get("/register.html", (req, res)=>{
+    //if in session and cookies are verified redirect to calendar page
+    if("id" in req.cookies && verifyId(req.cookies.id)) {
+        res.redirect('/calendar.html')
+    }
     res.sendFile(__dirname + "/views/register.html");
     res.status(200);
 
+});
+
+app.get("/delCookie", (req, res)=>{
+    if ("id" in req.cookies) {
+        res.clearCookie("id");
+        res.status(200)
+    } else {
+        res.status(201)
+    }
+    res.end()
 });
 
 /**
@@ -128,7 +154,7 @@ app.post("/register.html", async (req, res) => {
     
     try { 
         const {Username, Password, Email} = req.body 
-        console.log(Username, Password, Email)
+        // console.log(Username, Password, Email)
 
         await users.insertMany({
             "Username": Username,
@@ -150,7 +176,7 @@ app.post("/login.html", async (req, res) => {
     try {
         //get data from body
         const {Password, Email} = req.body 
-        console.log(Password, Email)
+        // console.log(Password, Email)
 
         //verify if email exists
         const verification = await verify(Email, Password)
@@ -205,7 +231,7 @@ app.post("/delEvent", async (req, res) => {
     //log event into db
     try {
         if ("id" in req.cookies) {
-            console.log(req.cookies.id)
+            // console.log(req.cookies.id)
             //TODO: check if id in cookie session is valid
 
             //find and delete
@@ -271,6 +297,16 @@ async function verify(email, password) {
     return false
 }
 
+async function verifyId(id) {
+    // console.log(id);
+    const record = (await users.findOne({"_id": id})).toJSON()
+    // console.log(record, record._id , id, record._id.toString() === id)
+    if (record._id.toString() === id) {
+        return true;
+    }
+    return false
+}
+
 /**
  * make it listen to port -- IMPORTANT
  */
@@ -279,7 +315,6 @@ app.listen(port, ()=>{
     console.log(__dirname);
 })
 
-console.log("hi")
 
 
 

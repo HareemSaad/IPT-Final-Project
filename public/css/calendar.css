@@ -105,6 +105,26 @@ header .icons span:hover{
     font-size: 1.2rem;
     text-align: center;
 }
+#logout {
+    justify-self: flex-start;
+    align-self: flex-start;
+    color: black;
+	font-size: 20px;
+	background-image: linear-gradient(to right, #EC4899, #B44862);
+    border-radius: 1rem;
+	cursor: pointer;
+    padding: 10px;
+    margin-top: 30px;
+}
+
+#logout:hover {
+	opacity: 0.6;
+}
+
+#logout:active {
+	opacity: 0.6;
+}
+
 #events{
     height: 20rem;
     width: 400px;

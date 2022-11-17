@@ -81,7 +81,7 @@ form.addEventListener('submit', async event => {
             })
             //above variables should be same in const {Username, Password, Email} = req.body when loading this function (in express file)
         })
-        console.log(res)
+        // console.log(res)
 
         //if reg succesful redirect to login other wise reg
         if(res.status == 200) {

@@ -357,3 +357,21 @@ async function renderEventList() {
     
 }
 
+//logout button deletes cookies
+const logout = document.getElementById("logout");
+
+logout.addEventListener ("click", async (e) => {
+    e.preventDefault()
+    try {
+        const res = await fetch("http://localhost:3000/delCookie", {
+            method: 'GET'
+        })
+        if (res.status == 200) {
+            window.location = "/"
+        }
+    } catch (error) {
+        console.log(error)
+    }
+
+})
+
