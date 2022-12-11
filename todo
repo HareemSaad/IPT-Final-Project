@@ -1,5 +1,0 @@
-in calendar.js
-    for editCloseBtn onclick
-    //TODO: closing modal saves the value changes to db and div 
-    because you have already changed the heading.value and des.val 
-    by the timw you click close
