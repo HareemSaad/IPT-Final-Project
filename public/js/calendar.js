@@ -54,6 +54,9 @@ const calendar = () =>{
     days.innerHTML = li;
 }
 calendar()
+
+/**Hareem's area */
+
 addOnClickToCalendarTiles()
 //function for icons
 const icons = twoIcons.forEach(icon =>{
@@ -76,8 +79,6 @@ const icons = twoIcons.forEach(icon =>{
      addOnClickToCalendarTiles()
     });
 });
-
-/**Hareem's area */
 
 //add onclick listener's on callendar tiles
 function addOnClickToCalendarTiles() {
